@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% block title %}Список постов{% endblock %}
+{% block content %}
+<h1>Все посты</h1>
+{% if posts %}
+    {% for post in posts %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h5>
+            <p class="card-text">{{ post.text|truncatewords:30 }}</p>
+            <p class="card-text"><small class="text-muted">Автор: {{ post.author }} | {{ post.created_at|date:"d.m.Y H:i" }}</small></p>
+            <p>Категории: {% for cat in post.categories.all %}{{ cat.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Нет постов. <a href="{% url 'post_create' %}">Создать первый?</a></p>
+{% endif %}
+{% endblock %}

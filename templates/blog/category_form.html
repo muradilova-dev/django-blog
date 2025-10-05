@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% block title %}{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} категорию{% endblock %}
+{% block content %}
+<h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} категорию</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.errors %}{{ form.name.errors }}{% endif %}
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+    <a href="{% url 'category_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

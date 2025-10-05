@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p><strong>Автор:</strong> {{ post.author }}</p>
+<p><strong>Дата:</strong> {{ post.created_at|date:"d.m.Y H:i" }}</p>
+<p><strong>Категории:</strong> {% for cat in post.categories.all %}{{ cat.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<div class="mb-3">{{ post.text|linebreaks }}</div>
+{% if user == post.author %}
+    <a href="{% url 'post_update' post.pk %}" class="btn btn-primary">Редактировать</a>
+    <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">Удалить</a>
+{% endif %}
+<a href="{% url 'post_list' %}" class="btn btn-secondary">Назад к списку</a>
+{% endblock %}

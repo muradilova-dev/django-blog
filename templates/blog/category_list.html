@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% block title %}Список категорий{% endblock %}
+{% block content %}
+<h1>Категории</h1>
+{% if categories %}
+    {% for category in categories %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a></h5>
+            <p class="card-text">Постов: {{ category.post_set.count }}</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'category_update' category.pk %}" class="btn btn-primary btn-sm">Редактировать</a>
+                <a href="{% url 'category_delete' category.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Нет категорий. <a href="{% url 'category_create' %}">Создать первую?</a></p>
+{% endif %}
+{% if user.is_authenticated %}
+    <a href="{% url 'category_create' %}" class="btn btn-success">Новая категория</a>
+{% endif %}
+{% endblock %}

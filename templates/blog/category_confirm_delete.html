@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block title %}Удалить категорию{% endblock %}
+{% block content %}
+<h1>Удалить категорию "{{ category.name }}"?</h1>
+<p>Посты в ней останутся, но потеряют связь с категорией.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a href="{% url 'category_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}
